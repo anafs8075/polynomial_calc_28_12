@@ -2,23 +2,35 @@ package com.ll;
 
 public class Calc {
   public static int run(String exp) {
+    boolean needToMultiplay = exp.contains("*");
+    boolean needToPlus = !needToMultiplay;
+
+    if (needToPlus) {
+      exp = exp.replaceAll("\\- ", "\\+ \\-");
 
 
-    exp = exp.replaceAll("\\- ", "\\+ \\-");
+      String[] bits = exp.split(" \\+ ");
 
+      int sum = 0;
 
-    String[] bits = exp.split(" \\+ ");
+      for (int i = 0; i < bits.length; i++) {
+        sum += Integer.parseInt(bits[i]);
+      }
 
-    int sum = 0;
+      return sum;
+    } else if (needToMultiplay) {
+      String[] bits = exp.split(" \\* ");
 
-    for (int i = 0; i < bits.length; i++) {
-      sum += Integer.parseInt(bits[i]);
+      int rs = 1;
+
+      for (int i = 0; i < bits.length; i++) {
+        rs *= Integer.parseInt(bits[i]);
+      }
+      return rs;
     }
 
-    return sum;
-
-
-//    throw new RuntimeException("처리할 수 있는 계산식이 아닙니다");
+      throw new RuntimeException("처리할 수 있는 계산식이 아닙니다");
   }
 }
+
 
