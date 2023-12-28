@@ -2,8 +2,17 @@ package com.ll;
 
 public class Calc {
   public static int run(String exp) {
-    boolean needToMultiplay = exp.contains("*");
-    boolean needToPlus = !needToMultiplay;
+    boolean needToMultiply = exp.contains("*");
+    boolean needToPlus = exp.contains("+");
+
+
+    boolean needToCompound = needToMultiply && needToPlus;
+
+    if (needToCompound) {
+      String[] bits = exp.split(" \\+ ");
+
+      return Integer.parseInt(bits[0]) + run(bits[1]);
+    }
 
     if (needToPlus) {
       exp = exp.replaceAll("\\- ", "\\+ \\-");
@@ -18,7 +27,7 @@ public class Calc {
       }
 
       return sum;
-    } else if (needToMultiplay) {
+    } else if (needToMultiply) {
       String[] bits = exp.split(" \\* ");
 
       int rs = 1;
